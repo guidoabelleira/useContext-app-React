@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
 const Movie = ({movie}) => {
+
+    // Para esta prueba oculto el boton favorite, pero puedo sincronizar con local storage y mantener estado. (ver!)
+
+
+    const {user, toggleFavoriteMovieToUser} = useContext(UserContext);
 
     const imgStyles = {
         height: '260px',
@@ -8,7 +14,7 @@ const Movie = ({movie}) => {
         objectPosition: 'top'
     }
 
-    const isFavorite = true;
+    const isFavorite = user?.favoriteMovies?.includes(movie.id);
 
     return (
         <div className="card">
@@ -20,9 +26,14 @@ const Movie = ({movie}) => {
             />
             <div className="card-body">
                 <h4>{movie.title}</h4>
-                <button className={`btn ${isFavorite ? 'btn-success' : 'btn btn-outline-primary'}`}>
+                { user?.id &&
+                    <button 
+                    className={`btn ${isFavorite ? 'btn-success' : 'btn btn-outline-primary'}`}
+                    onClick={() => toggleFavoriteMovieToUser(movie.id)}
+                    >
                     Favorito
                 </button>
+                }
             </div>
         </div>
 

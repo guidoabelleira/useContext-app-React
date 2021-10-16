@@ -1,13 +1,19 @@
 import React from 'react';
 import MovieList from "./components/MovieList";
 import NavBar from "./components/NavBar";
-
+import { MoviesProvider } from './contexts/MoviesContext';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
+    
     return (
         <div>
-            <NavBar />
-            <MovieList />
+            <UserProvider>
+                <MoviesProvider>
+                    <NavBar />
+                    <MovieList />
+                </MoviesProvider> 
+            </UserProvider>
         </div>
   );
 }
