@@ -2,18 +2,24 @@ import React, { createContext, useState } from 'react';
 
 const UserContext = createContext();
 
-const initialUser = { id: 1, name: 'Guido', favoriteMovies: [1,2]}
 
 
 const UserProvider = ({ children }) => {
 
-    const [user, setUser] = useState(initialUser);
+    const [user, setUser] = useState();
 
     const login = () => {
+        const setInitialUser = JSON.parse(localStorage.getItem('localMovie'))
+
+        const initialUserBase = { id: 1, name: 'Guido', favoriteMovies: []}
+
+        const initialUser = setInitialUser? setInitialUser : initialUserBase;
+        
         setUser(initialUser);
     }
 
     const logout = () => {
+        localStorage.setItem('localMovie', JSON.stringify(user));
         setUser(null)
     }
 
